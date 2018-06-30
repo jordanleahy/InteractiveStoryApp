@@ -25,7 +25,7 @@
                                 <rect key="frame" x="116" y="589" width="143" height="30"/>
                                 <state key="normal" title="Start Your Adventure"/>
                                 <connections>
-                                    <segue destination="pAG-oC-WMi" kind="show" id="3Ib-p6-2gc"/>
+                                    <segue destination="pAG-oC-WMi" kind="show" identifier="startAdventure" id="3Ib-p6-2gc"/>
                                 </connections>
                             </button>
                         </subviews>

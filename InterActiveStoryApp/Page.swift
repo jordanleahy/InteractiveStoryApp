@@ -11,6 +11,8 @@ import Foundation
 class Page {
     let story: Story
     
+    // MARK: 
+    
     typealias Choice = (title: String, page: Page)
     
     var firstChoice: Choice?
