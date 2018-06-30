@@ -22,6 +22,7 @@ enum Story {
 }
 
 extension Story {
+    //Computed property
     var artwork: UIImage {
         switch self {
         case .returnTrip: return #imageLiteral(resourceName: "ReturnTrip")
