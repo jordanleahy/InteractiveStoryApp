@@ -55,37 +55,54 @@ class PageController: UIViewController {
     
     // MARK: - User Interface Stored Properties
     
-    let artworkView: UIImageView = {
+    //Closure/Anonymous immediately executing function
+    //lazy stored property that is created after the class's initialization is complete which allows us to use page: Page?
+    lazy var artworkView: UIImageView = {
         let imageView = UIImageView()
         //Turn off iOS's automatic constraint view so we can add our own constraints
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        //Shows first image/artwork inside of an image view for the first page in our story
+        imageView.image = self.page?.story.artwork
         
         return imageView
     }()
     
-    //Anonymous immediately executing function
-    let storyLabel: UILabel = {
+    //Closure/Anonymous immediately executing function
+    lazy var storyLabel: UILabel = {
         let label = UILabel()
         //Turn off iOS's automatic constraint view so we can add our own constraints
         label.translatesAutoresizingMaskIntoConstraints = false
         //Allows swift to determine how many lines it needs to display to show all the text. Default is 1 line
         label.numberOfLines = 0
-        
+        label.attributedText = self.page?.story(attributed: true)
+
         return label
     }()
     
-    
-    let firstChoiceButton: UIButton = {
+    //Closure/Anonymous immediately executing function
+    lazy var firstChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        // nil coalescing operator. The added benefit here is that we get to use a single constant, "title" rather than declaring an empty string variable and assigning a value depending on an if statement.
+        let title = self.page?.firstChoice?.title ?? "Play Again"
+        // ternary conditional operator. If this returns true, meaning firstChoice isn't nil, we provide a true case and after colon : provide false case.
+        let selector = self.page?.firstChoice != nil ? #selector(PageController.loadFirstChoice) : #selector(PageController.playAgain)
+        
+        button.setTitle(title, for: .normal)
+        button.addTarget(self, action: selector, for: .touchUpInside)
         
         return button
     }()
     
-    let secondChoiceButton: UIButton = {
+    //Closure/Anonymous immediately executing function
+    lazy var secondChoiceButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.setTitle(self.page?.secondChoice?.title, for: .normal)
+        button.addTarget(self, action: #selector(PageController.loadSecondChoice), for: .touchUpInside)
         
         return button
     }()
@@ -101,36 +118,13 @@ class PageController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    //MARK: viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //
         view.backgroundColor = .white
         
-        
-        //Unwrap since page is an optional property. 
-        if let page = page {
-            
-            artworkView.image = page.story.artwork  //Shows first image/artwork inside of an image view for the first page in our story
-            
-            
-            storyLabel.attributedText = page.story(attributed: true)
-            
-            // See if firstChoice is nil or not. Set button text to firstChoice text. If firstChoice nil, "Play Again"
-            if let firstChoice = page.firstChoice {
-                firstChoiceButton.setTitle(firstChoice.title, for: .normal)
-                firstChoiceButton.addTarget(self, action: #selector(PageController.loadFirstChoice), for: .touchUpInside)
-            } else {
-                firstChoiceButton.setTitle("Play Again", for: .normal)
-                firstChoiceButton.addTarget(self, action: #selector(PageController.playAgain), for: .touchUpInside)
-            }
-            
-            if let secondChoice = page.secondChoice {
-                secondChoiceButton.setTitle(secondChoice.title, for: .normal)
-                secondChoiceButton.addTarget(self, action: #selector(PageController.loadSecondChoice), for: .touchUpInside)
-            }
-            
-        }
     }
 
     override func didReceiveMemoryWarning() {
