@@ -12,8 +12,41 @@
 
 */
 
-import Foundation
+
 import UIKit
+
+//Create this extensions so we don't have to create range: on the fly everytime.
+extension NSAttributedString {
+    var stringRange: NSRange {
+        return NSMakeRange(0, self.length) //We do self.length because we're in the stype type right now.
+    }
+}
+
+extension Story {
+    // Add computed property called attributedString that simply returns an attributed string with our style applied.
+    var attributedText: NSAttributedString {
+        //Contains the string we want to display along with a dictionary with certain keys to make modifications.
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 10
+        
+        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: attributedString.stringRange)
+        
+        return attributedString
+    }
+}
+
+// If attributed is true, we want to return story.attributedText otherwise we'll return the plain story without any styles applied but as an NSAttributedString
+extension Page {
+    func story(attributed: Bool) -> NSAttributedString {
+        if attributed {
+            return story.attributedText
+        } else {
+            return NSAttributedString(string: story.text)
+        }
+    }
+}
 
 class PageController: UIViewController {
     
@@ -80,15 +113,8 @@ class PageController: UIViewController {
             
             artworkView.image = page.story.artwork  //Shows first image/artwork inside of an image view for the first page in our story
             
-            //Contains the string we want to display along with a dictionary with certain keys to make modifications.
-            let attributedString = NSMutableAttributedString(string: page.story.text)
-          
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 10
             
-            attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-            
-            storyLabel.attributedText = attributedString
+            storyLabel.attributedText = page.story(attributed: true)
             
             // See if firstChoice is nil or not. Set button text to firstChoice text. If firstChoice nil, "Play Again"
             if let firstChoice = page.firstChoice {
