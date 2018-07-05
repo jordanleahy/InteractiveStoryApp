@@ -22,6 +22,7 @@ extension NSAttributedString {
     }
 }
 
+//This is very specific to PageController so it doesnt need to go in Story.swift
 extension Story {
     // Add computed property called attributedString that simply returns an attributed string with our style applied.
     var attributedText: NSAttributedString {
@@ -124,12 +125,10 @@ class PageController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //MARK: - Creating Views Progammatically
@@ -139,8 +138,6 @@ class PageController: UIViewController {
         
         //Add artworkView as a subview of our main view.  Same as dragging UIImageView in IB
         view.addSubview(artworkView)
-        
-        
         
         //Set constraints by pinning artworkView anchors to main view anchors
         NSLayoutConstraint.activate([
@@ -153,16 +150,14 @@ class PageController: UIViewController {
         //Add storyLabel as a subview in our main view.
         view.addSubview(storyLabel)
         
-        
         NSLayoutConstraint.activate([
             storyLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0), // 16 points
             storyLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
             storyLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -48.0)
-            
             ])
+        
         //Add firstChoiceButton as a subviw in our main view
         view.addSubview(firstChoiceButton)
-        
         NSLayoutConstraint.activate([
             firstChoiceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             firstChoiceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80.0)
@@ -170,7 +165,6 @@ class PageController: UIViewController {
         
         //Add secondChoiceButton as a subviw in our main view
         view.addSubview(secondChoiceButton)
-        
         NSLayoutConstraint.activate([
             secondChoiceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             secondChoiceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32)

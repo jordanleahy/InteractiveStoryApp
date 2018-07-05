@@ -28,11 +28,21 @@
                                     <segue destination="pAG-oC-WMi" kind="show" identifier="startAdventure" id="3Ib-p6-2gc"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ifs-El-ZSo">
+                                <rect key="frame" x="24" y="519" width="327" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DLI-Q9-TY9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1N8-Tt-plm"/>
                             <constraint firstItem="DLI-Q9-TY9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Whg-Bj-NKO"/>
+                            <constraint firstItem="Ifs-El-ZSo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="czH-sc-aNg"/>
+                            <constraint firstItem="Ifs-El-ZSo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="d2v-di-94T"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ifs-El-ZSo" secondAttribute="trailing" constant="24" id="eJz-QZ-bZk"/>
+                            <constraint firstItem="eti-HO-UPd" firstAttribute="top" secondItem="Ifs-El-ZSo" secondAttribute="bottom" constant="40" id="gkh-E7-TEw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DLI-Q9-TY9" secondAttribute="bottom" id="kd2-JS-msz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DLI-Q9-TY9" secondAttribute="trailing" id="pz8-ev-NLg"/>
                             <constraint firstItem="eti-HO-UPd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="um9-Bd-xrR"/>
@@ -41,6 +51,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="f5s-Mh-sBR"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="Ifs-El-ZSo" id="sWA-tt-pqZ"/>
+                        <outlet property="textFieldBottomConstraint" destination="gkh-E7-TEw" id="PUe-pJ-mCL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
