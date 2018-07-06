@@ -14,6 +14,7 @@
 
 
 import UIKit
+import AudioToolbox
 
 //Create this extensions so we don't have to create range: on the fly everytime.
 extension NSAttributedString {
@@ -53,6 +54,9 @@ class PageController: UIViewController {
     
     //Add stored property to hold the page we'll be working with.
     var page: Page?
+    
+    //create instance of SoundEffectsPlayer
+    let soundEffectsPlayer = SoundEffectsPlayer()
     
     // MARK: - User Interface Stored Properties
     
@@ -179,6 +183,8 @@ class PageController: UIViewController {
             let nextPage = firstChoice.page // new page used to create page controller instance and assign to constant
             let pageController = PageController(page: nextPage) // Create new PageController instance.
             
+            soundEffectsPlayer.playSound(for: firstChoice.page.story)
+            
             //Ask navigationController to push pageController onto the stack
             navigationController?.pushViewController(pageController, animated: true)
         }
@@ -189,6 +195,8 @@ class PageController: UIViewController {
         if let page = page, let secondChoice = page.secondChoice {
             let nextPage = secondChoice.page
             let pageController = PageController(page: nextPage)
+            
+            soundEffectsPlayer.playSound(for: secondChoice.page.story)
             
             navigationController?.pushViewController(pageController, animated: true)
         }

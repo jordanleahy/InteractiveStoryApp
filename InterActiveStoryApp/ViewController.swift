@@ -17,14 +17,15 @@ class ViewController: UIViewController {
 
 
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint! //
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //
+        //When the system is about to display a keyboard, it fires off the UIKeyboardWillShow notification that is routed thRough NotificationCenter.  UIKeyboardWillShow is the name of the notification we are listening to.
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
             
             //Handle error right as it is thrown
             do {
-                if let name = nameTextField.text {
+                if let name = nameTextField.text { //unwrap text field property
                     if name == "" { //UITextField.text default is an empty string
                         throw AdventureError.nameNotProvided
                     } else {
@@ -66,9 +67,10 @@ class ViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        if let info = notification.userInfo, let keyboardFrame = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let frame = keyboardFrame.cgRectValue
-            textFieldBottomConstraint.constant = frame.size.height + 10
+        //
+        if let info = notification.userInfo, let keyboardFrame = info[UIKeyboardFrameEndUserInfoKey] as? NSValue { //
+            let frame = keyboardFrame.cgRectValue //convert the result from NSValue to cgRect so we can access frame.size.height
+            textFieldBottomConstraint.constant = frame.size.height + 10 //access outlet constraint assign and add 10 points to keyboard height
             
             UIView.animate(withDuration: 0.8) {
                 self.view.layoutIfNeeded()
@@ -76,10 +78,49 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    @objc func keyboardWillHide(_ notification: Notification) {//Accept as an argument the notification that fired this off which is of type Notification
+        // set constant on constraint back to original
+        textFieldBottomConstraint.constant = 40
+        
+        UIView.animate(withDuration: 0.8) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    //Once the ViewController subclass is deallocated and done with, we need to deregister ourselves as an observer
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
 
 }
+
+extension ViewController: UITextFieldDelegate {
+    
+    //This method is called when a user taps on the Done button to get rid of keyboard.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() //transfer the first responder control back to ViewController.  Once we resignFirstResponder status, the system knows to get rid of the keyboard
+        return true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

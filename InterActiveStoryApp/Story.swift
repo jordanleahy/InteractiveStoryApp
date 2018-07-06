@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Proivde three members associated values and pass in the users name
 enum Story {
     case returnTrip(name: String)
     case touchDown
@@ -40,7 +41,7 @@ extension Story {
     
     var text: String {
         switch self {
-        case .returnTrip(let name):
+        case .returnTrip(let name): //bind associated value to local constant so we can use modifty the name for this member
             return "On your return trip from studying Saturn's rings, you hear a distress signal that seems to be coming from the surface of Mars. It's strange because there hasn't been a colony there in years. \"Help me \(name), you're my only hope.\""
         case .touchDown:
             return "You deftly land your ship near where the distress signal originated. You didn't notice anything strange on your fly-by, behind you is an abandoned rover from the early 21st century and a small crate."
